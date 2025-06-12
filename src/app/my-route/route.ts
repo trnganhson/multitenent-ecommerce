@@ -7,7 +7,13 @@ export const GET = async () => {
   })
 
   const data = await payload.find({
-    collection: 'users',
+    collection: 'categories',
+    depth: 1, //Populate subcategories
+    where: {
+      parent: {
+        exists: false,
+      }
+    }
   })
 
   return Response.json(data)

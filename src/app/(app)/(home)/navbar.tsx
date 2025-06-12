@@ -27,7 +27,7 @@ const NavbarItem =({href,children,isActive}: NavbarItemProps)=>{
             asChild
             variant = "outline"
             className={cn("bg-transparent hover:bg-transparent rounded-full hover:border-primary border-transparent px-3.5 text-lg",
-                isActive &&"bg-black text-white hover:bg-black hover: text-white"
+                isActive &&"bg-black text-white hover:bg-black hover:text-white"
             )}
         >
             <Link href={href}>
@@ -68,7 +68,7 @@ export const Navbar = ()=>{
                     <NavbarItem
                         key={item.href}
                         href={item.href}
-                        isActive ={pathname === item.children}
+                        isActive = {pathname === item.href}
                     >
                     {item.children}
                     </NavbarItem>
