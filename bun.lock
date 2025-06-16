@@ -59,6 +59,7 @@
         "recharts": "^2.15.3",
         "server-only": "^0.0.1",
         "sonner": "^2.0.4",
+        "superjson": "1.1.0",
         "tailwind-merge": "^3.3.0",
         "vaul": "^1.1.2",
         "zod": "^3.25.64",
@@ -1773,6 +1774,8 @@
     "styled-jsx": ["styled-jsx@5.1.6", "", { "dependencies": { "client-only": "0.0.1" }, "peerDependencies": { "react": ">= 16.8.0 || 17.x.x || ^18.0.0-0 || ^19.0.0-0" } }, "sha512-qSVyDTeMotdvQYoHWLNGwRFJHC+i+ZvdBRYosOFgC+Wg1vx4frN2/RG/NA7SYqqvKNLf39P2LSRA2pu6n0XYZA=="],
 
     "stylis": ["stylis@4.2.0", "", {}, "sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw=="],
+
+    "superjson": ["superjson@1.1.0", "", {}, "sha512-LRbCPnR3c8rwkT3s4oSRekVXGOkfzCfTZqqLiGKadZWeO5F+xpYbgwmotgQfvT5sH/7GDkgx7aJbWHKV9XoR9w=="],
 
     "supports-color": ["supports-color@7.2.0", "", { "dependencies": { "has-flag": "^4.0.0" } }, "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw=="],
 
