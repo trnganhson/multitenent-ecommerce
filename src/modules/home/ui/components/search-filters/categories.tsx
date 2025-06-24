@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export const Categories = ({ data }: Props) => {
+  const params = useParams();
+
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
   const viewAllRef = useRef<HTMLDivElement>(null);
@@ -24,7 +27,8 @@ export const Categories = ({ data }: Props) => {
   const [isAnyHovered, setIsAnyHovered] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const activeCategory = "all";
+  const categoryParam = params.category as string | undefined;
+  const activeCategory = categoryParam || "all";
 
   const activeCategoryIndex = data.findIndex(
     (cat) => cat.slug === activeCategory
@@ -63,13 +67,13 @@ export const Categories = ({ data }: Props) => {
 
   return (
     <div className="relative w-full">
-    {/* Category sidebar */}
-    <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen}/>
-    {/* Hidden div to measure all items */}
-      <div 
+      {/* Category sidebar */}
+      <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
+      {/* Hidden div to measure all items */}
+      <div
         ref={measureRef}
         className="absolute opacity-0 pointer-events-none flex"
-        style={{position: "fixed", top: -9999, left: -9999}}
+        style={{ position: "fixed", top: -9999, left: -9999 }}
       >
         {data.map((category) => (
           <div key={category.id}>
@@ -82,12 +86,12 @@ export const Categories = ({ data }: Props) => {
         ))}
       </div>
 
-    {/* Visible items */}
-      <div 
-      ref={containerRef}
+      {/* Visible items */}
+      <div
+        ref={containerRef}
         className="flex flex-nowrap items-center"
-        onMouseEnter={()=> setIsAnyHovered(true)}
-        onMouseLeave={()=> setIsAnyHovered(false)}
+        onMouseEnter={() => setIsAnyHovered(true)}
+        onMouseLeave={() => setIsAnyHovered(false)}
       >
         {data.slice(0, visibleCount).map((category) => (
           <div key={category.id}>
@@ -99,21 +103,20 @@ export const Categories = ({ data }: Props) => {
           </div>
         ))}
 
-        <div
-            ref={viewAllRef} 
-            className="shrink-0"
-        >
-            <Button 
-                className={cn( 
-                    "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
-                    isActiveCategoryHidden && !isAnyHovered && "bg-white border-primary"
-                )}
-                onClick={()=>setIsSidebarOpen(true)}
-            >
-              View All
-              <ListFilterIcon/>
-            </Button>
-
+        <div ref={viewAllRef} className="shrink-0">
+          <Button
+            variant = "elevated"
+            className={cn(
+              "h-11 px-4 bg-transparent border-transparent rounded-full hover:bg-white hover:border-primary text-black",
+              isActiveCategoryHidden &&
+                !isAnyHovered &&
+                "bg-white border-primary"
+            )}
+            onClick={() => setIsSidebarOpen(true)}
+          >
+            View All
+            <ListFilterIcon />
+          </Button>
         </div>
       </div>
     </div>
