@@ -2,6 +2,7 @@ import { headers as getHeaders } from "next/headers";
 import { TRPCError } from "@trpc/server";
 
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+
 import { loginSchema, registerSchema } from "../schema";
 import { generateAuthCookie } from "../utils";
 
@@ -35,12 +36,26 @@ export const authRouter = createTRPCRouter({
             })
         }
 
+        const tenant = await ctx.db.create({
+            collection: "tenants",
+            data: {
+                name: input.username,
+                slug: input.username,
+                stripeAccountId: "test"
+            }
+        })
+
         await ctx.db.create ({
             collection: "users",
             data: {
                 email: input.email,
                 username: input.username,
                 password: input.password, // this will be hashed
+                tenants: [
+                    {
+                        tenant: tenant.id,
+                    }
+                ]
             },
         })
 

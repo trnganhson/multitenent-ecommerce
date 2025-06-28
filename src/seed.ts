@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { getPayload } from "payload"
 import config from "@payload-config"
  
@@ -139,6 +140,31 @@ const categories = [
 
   const seed = async()=>{
     const payload = await getPayload({config})
+
+    const adminTenant = await payload.create({
+      collection: "tenants",
+      data : {
+        name: "admin",
+        slug: "admin",
+        stripeAccountId: "admin",
+      },
+    })
+
+    //Create admin user 
+    await payload.create({
+      collection: "users",
+      data: {
+        email: "transonnn@demo.com",
+        password: "123456789",
+        roles: ["super-admin"],
+        username: "admin",
+        tenants: [
+          {
+            tenants: adminTenant.id,
+          },
+        ]
+      }
+    })
     
     for(const category of categories) {
         const parentCategory = await payload.create({
