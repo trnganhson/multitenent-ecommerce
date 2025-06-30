@@ -10,7 +10,7 @@ import { PriceFilter } from "./price-filter";
 import { useProductFilter } from "../../hooks/use-product-filter";
 
 interface ProductFilterProps {
-    title: string;
+    title: kstring;
     className?: string;
     children: React.ReactNode;
 }
