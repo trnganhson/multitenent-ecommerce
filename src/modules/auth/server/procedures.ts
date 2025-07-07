@@ -53,7 +53,7 @@ export const authRouter = createTRPCRouter({
                 password: input.password, // this will be hashed
                 tenants: [
                     {
-                        tenant: tenant.id,
+                        tenants: tenant.id,
                     }
                 ]
             },
