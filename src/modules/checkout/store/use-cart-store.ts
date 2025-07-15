@@ -11,12 +11,11 @@ interface CartState {
   removeProduct: (tenantSlug: string, productId: string) => void;
   clearCart: (tenantSlug: string) => void;
   clearAllCarts: () => void;
-  getCartByTenant: (tenantSlug: string) => string[];
 }
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       tenantCarts: {},
       addProduct: (tenantSlug, productId) =>
         set((state) => ({
@@ -36,9 +35,10 @@ export const useCartStore = create<CartState>()(
           tenantCarts: {
             ...state.tenantCarts,
             [tenantSlug]: {
-              productIds: state.tenantCarts[tenantSlug]?.productIds.filter(
-                (id)=> id !== productId
-              ) || [],
+              productIds:
+                state.tenantCarts[tenantSlug]?.productIds.filter(
+                  (id) => id !== productId
+                ) || [],
             },
           },
         })),
@@ -53,12 +53,10 @@ export const useCartStore = create<CartState>()(
           },
         })),
 
-        clearAllCarts: () =>
-            set({
-                tenantCarts: {},
-            }),
-        getCartByTenant: (tenantSlug) => 
-            get().tenantCarts[tenantSlug]?.productIds || []
+      clearAllCarts: () =>
+        set({
+          tenantCarts: {},
+        }),
     }),
     {
       name: "sonshop-cart",
