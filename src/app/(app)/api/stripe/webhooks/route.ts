@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     console.log(`✅ Success: ${event.id}`);
 
     const permittedEvents: string[] = [
-        "checkout.session,completed",
+        "checkout.session.completed",
     ]
 
     const payload = await getPayload({config});
