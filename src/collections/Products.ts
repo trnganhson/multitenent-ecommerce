@@ -1,5 +1,6 @@
 import { isSuperAdmin } from "@/lib/access";
 import { Tenant } from "@/payload-types";
+
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
@@ -11,7 +12,8 @@ export const Products: CollectionConfig = {
             const tenant = req.user?.tenants?.[0]?.tenants as Tenant
 
             return Boolean(tenant?.stripeDetailsSubmitted)
-        }
+        },
+        delete: ({req}) => isSuperAdmin(req.user)
     },
     admin: {
         useAsTitle: "name",
@@ -24,7 +26,7 @@ export const Products: CollectionConfig = {
         },
         {
             name: "description",
-            type: "text",
+            type: "richText",
         },
         {
             name: "price",
@@ -59,11 +61,28 @@ export const Products: CollectionConfig = {
         },
         {
             name: "content",
-            //TODO: Change to RichText
-            type: "textarea",
+            type: "richText",
             admin: {
                 description: "Protected content only visible to customers after purchase, Add product documentation, dowloadable files, getting started guides, and bonus materials. Supports Markdown formatting"
             }
-        }
+        },
+        {
+            name: "isPrivite",
+            label: "Private",
+            defaultValue: false,// this one will "null" or "undefined"
+            type: "checkbox",
+            admin: {
+                description: "If checked, this product will not be shown on the public storefront"
+            }
+        },
+        {
+            name: "isArchived",
+            label: "Archive",
+            defaultValue: false,// this one will "null" or "undefined"
+            type: "checkbox",
+            admin: {
+                description: "Check if you want to hide this product"
+            }
+        },
     ]
 }

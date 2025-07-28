@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import dynamic from "next/dynamic"
+import dynamic from "next/dynamic";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCheckIcon, LinkIcon, StarIcon } from "lucide-react";
+import { defaultJSXConverters, RichText } from "@payloadcms/richtext-lexical/react"
 
 import { StarRating } from "@/components/star-rating";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
@@ -22,14 +23,16 @@ interface ProductViewProps {
 }
 
 const CartButton = dynamic(
-  ()=> import("../components/cart-button").then(
-    (mod) => mod.CartButton
-  ),
+  () => import("../components/cart-button").then((mod) => mod.CartButton),
   {
     ssr: false,
-    loading: () => <Button  disabled className="flex-1 bg-pink-400">add to cart</Button>
+    loading: () => (
+      <Button disabled className="flex-1 bg-pink-400">
+        add to cart
+      </Button>
+    ),
   }
-)
+);
 
 export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
   const trpc = useTRPC();
@@ -37,7 +40,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
     trpc.products.getOne.queryOptions({ id: productId })
   );
 
-  const [isCopied, setIsCopied] = useState(false)
+  const [isCopied, setIsCopied] = useState(false);
 
   return (
     <div className="px-4 lg:px-12 py-10">
@@ -84,7 +87,10 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 
               <div className="hidden lg:flex px-6 py-4 items-center justify-center">
                 <div className="flex items-center gap-2">
-                  <StarRating rating={data.reviewRating} iconClassName="size-4" />
+                  <StarRating
+                    rating={data.reviewRating}
+                    iconClassName="size-4"
+                  />
                   <p className="text-base font-medium">
                     {data.reviewCount} ratings
                   </p>
@@ -95,13 +101,15 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             <div className="block lg:hidden px-6 py-4 items-center border-b">
               <div className="flex items-center gap-2">
                 <StarRating rating={data.reviewRating} iconClassName="size-4" />
-                <p className="text-base font-medium">{data.reviewCount} ratings</p>
+                <p className="text-base font-medium">
+                  {data.reviewCount} ratings
+                </p>
               </div>
             </div>
 
             <div className="p-6">
               {data.description ? (
-                <p>{data.description}</p>
+                <RichText data={data.description}/>
               ) : (
                 <p className="font-medium text-muted-foreground italic">
                   No description provided
@@ -114,33 +122,32 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
             <div className="border-t lg:border-t-0 lg:border-l h-full">
               <div className="flex flex-col gap-4 p-6 lg:border-b">
                 <div className="flex items-center gap-2">
-                    <CartButton
-                    isPurchased = {data.isPurchased}
+                  <CartButton
+                    isPurchased={data.isPurchased}
                     productId={productId}
                     tenantSlug={tenantSlug}
-                    />
+                  />
                   <Button
                     className="size-12"
                     variant="elevated"
                     onClick={() => {
-                      setIsCopied(true)
-                      navigator.clipboard.writeText(window.location.href)
-                      toast.success("URL Copied to clipbroad")
-                      setTimeout(()=>{
-                        setIsCopied(false)
-                      },1000)
+                      setIsCopied(true);
+                      navigator.clipboard.writeText(window.location.href);
+                      toast.success("URL Copied to clipbroad");
+                      setTimeout(() => {
+                        setIsCopied(false);
+                      }, 1000);
                     }}
                     disabled={isCopied}
                   >
-                    {isCopied ? <CheckCheckIcon/> : <LinkIcon />}
+                    {isCopied ? <CheckCheckIcon /> : <LinkIcon />}
                   </Button>
                 </div>
 
                 <p className="text-center font-medium">
-                  {data.refundPolicy === "no-refunds" 
+                  {data.refundPolicy === "no-refunds"
                     ? "No refunds"
-                    : `${data.refundPolicy} money back guarantee`
-                  }
+                    : `${data.refundPolicy} money back guarantee`}
                 </p>
               </div>
 
@@ -148,17 +155,17 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                 <div className="flex items-center justify-between">
                   <h3 className="text-xl font-medium">Ratings</h3>
                   <div className="flex items-center gap-x-1 font-medium">
-                    <StarIcon className="size-4 fill-black"/>
+                    <StarIcon className="size-4 fill-black" />
                     <p>({data.reviewRating})</p>
                     <p className="text-base">{data.reviewCount} ratings</p>
                   </div>
                 </div>
-                <div
-                  className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4"
-                >
-                  {[5,4,3,2,1].map((stars)=>(
+                <div className="grid grid-cols-[auto_1fr_auto] gap-3 mt-4">
+                  {[5, 4, 3, 2, 1].map((stars) => (
                     <Fragment key={stars}>
-                      <div className="font-medium">{stars} {stars === 1 ? "star": "stars"}</div>
+                      <div className="font-medium">
+                        {stars} {stars === 1 ? "star" : "stars"}
+                      </div>
                       <Progress
                         value={data.ratingDistribution[stars]}
                         className="h-[1lh]"
@@ -168,11 +175,27 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                       </div>
                     </Fragment>
                   ))}
-                  
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProductViewSkeleton = () => {
+  return (
+    <div className="px-4 lg:px-12 py-10">
+      <div className="border rounded-sm bg-white overflow-hidden">
+        <div className="relative aspect-[3.9] border-b">
+          <Image
+            src="/placeholder.png"
+            alt="Placeholder"
+            fill
+            className="object-cover"
+          />
         </div>
       </div>
     </div>
