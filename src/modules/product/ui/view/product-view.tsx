@@ -5,7 +5,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCheckIcon, LinkIcon, StarIcon } from "lucide-react";
-import { defaultJSXConverters, RichText } from "@payloadcms/richtext-lexical/react"
+import { RichText } from "@payloadcms/richtext-lexical/react"
 
 import { StarRating } from "@/components/star-rating";
 import { formatCurrency, generateTenantURL } from "@/lib/utils";
