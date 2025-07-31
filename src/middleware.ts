@@ -24,4 +24,6 @@ export default async function middleware(req: NextRequest) {
         const tenantSlug = hostname.replace(`.${rootDomain}`,"")
         return NextResponse.rewrite(new URL(`/tenants/${tenantSlug}${url.pathname}`, req.url))
     }
+
+    return NextResponse.next() 
 }
