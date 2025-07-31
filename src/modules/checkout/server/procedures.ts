@@ -44,7 +44,7 @@ export const checkoutRouter = createTRPCRouter({
       const accountLink = await stripe.accountLinks.create({
         account: tenant.stripeAccountId,
         refresh_url: `${process.env.NEXT_PUBLIC_APP_URL!}/admin`,
-        return_url: `${process.env.NEXT_PUBLIC_APP_URL!}/adin`,
+        return_url: `${process.env.NEXT_PUBLIC_APP_URL!}/admin`,
         type: "account_onboarding",
       })
 
