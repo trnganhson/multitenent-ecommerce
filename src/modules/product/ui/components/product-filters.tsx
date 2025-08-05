@@ -7,7 +7,7 @@ import {cn} from "@/lib/utils"
 
 import { TagsFilter } from "./tags-filter"; 
 import { PriceFilter } from "./price-filter";
-import { useProductFilter } from "../../hooks/use-product-filter";
+import { useProductFilters } from "../../hooks/use-product-filter";
 
 interface ProductFilterProps {
     title: string;
@@ -39,7 +39,7 @@ const ProductFilter = ({ title, className, children }:ProductFilterProps) => {
 }
 
 export const ProductFilters = () => {
-    const [filters, setFilters] = useProductFilter()
+    const [filters, setFilters] = useProductFilters()
 
     const hasAnyFilters = Object.entries(filters).some(([key, value])=>{
         if(key === "sort") return false

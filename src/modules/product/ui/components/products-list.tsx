@@ -3,7 +3,7 @@
 import { useTRPC } from "@/trpc/client"
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query"
 
-import { useProductFilter } from "../../hooks/use-product-filter";
+import { useProductFilters } from "../../hooks/use-product-filter";
 import { ProductCard, ProductCardSkeleton } from "./product-card";
 import { DEFAULT_LIMIT } from "@/constants";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const ProductList = ({ category, tenantSlug, narrowView }: Props) => {
-    const [filters] = useProductFilter()
+    const [filters] = useProductFilters()
 
     const trpc = useTRPC()
     const { data,
