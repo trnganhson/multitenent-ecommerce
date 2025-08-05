@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
-import { useProductFilter } from "../../hooks/use-product-filter"
+import { useProductFilters } from "../../hooks/use-product-filter"
 
 export const ProductSort = () => {
-    const [filters, setFilters] = useProductFilter()
+    const [filters, setFilters] = useProductFilters()
 
     return(
         <div className="flex items-center gap-2">
