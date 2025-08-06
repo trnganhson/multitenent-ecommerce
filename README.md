@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Multi-Tenant E-commerce
 
-## Getting Started
+A modern, full-stack e-commerce platform built with Next.js, Payload CMS, and Stripe that supports multiple tenants (stores) on a single platform. Each tenant gets their own subdomain and can manage their products, orders, and payments independently.
 
-First, run the development server:
+🚀 Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+🏢 Multi-Tenant Architecture
+- Subdomain-based tenant isolation** - Each store gets its own subdomain (e.g., `store1.yourdomain.com`)
+- Independent product catalogs** - Each tenant manages their own products, categories, and media
+- Separate Stripe accounts** - Each tenant has their own Stripe account for payments
+- Role-based access control** - Super admins can manage all tenants, regular users are restricted to their assigned tenant
+
+🛒 E-commerce Features
+- Product management - Create, edit, and organize products with rich content
+- Category system - Hierarchical categories with subcategories
+- Shopping cart - Per-tenant cart management with persistent storage
+- Checkout system - Integrated Stripe checkout with tenant-specific accounts
+- Order management - Track orders and manage fulfillment
+- Review system - Customer reviews and ratings
+- Search and filtering - Advanced product search with category and tag filters
+
+📝 Content Management
+- Payload CMS integration - Full-featured admin panel for content management
+- Rich text editor - Lexical editor for product descriptions and content
+- Media management - Upload and organize images with Vercel Blob storage
+- Multi-tenant content isolation - Content is automatically scoped to the correct tenant
+
+🏗️ Architecture
+
+🛠️ Tech Stack
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Backend**: Payload CMS, tRPC
+- **Database**: MongoDB with Mongoose adapter
+- **Payment**: Stripe (multi-account support)
+- **Storage**: Vercel Blob for media files
+- **Styling**: Tailwind CSS, Radix UI components
+- **State Management**: Zustand, React Query
+
+### Quick Start
+
+Step 1: Clone the Repository
+git clone https://github.com/trnganhson/multitenent-ecommerce.git
+cd multitenent-ecommerce
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Step 2: Install Dependencies
+pnpm install (can use npm,yan or not recommended use bun) 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Step 3: Set Up the Database
+# Generate TypeScript types
+pnpm generate:types
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Fresh database migration
+pnpm db:fresh
 
-## Learn More
+# Seed the database with initial data
+pnpm db:seed
 
-To learn more about Next.js, take a look at the following resources:
+Step 4: Start the Development Server
+pnpm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### Step 6: Access the Application
+- Main app: http://localhost:3000
+- Admin pane: http://localhost:3000/admin
+- Default admin credentials: 
+  - Email: `transonnn@demo.com`
+  - Password: `123456789`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
